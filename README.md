@@ -7,7 +7,7 @@ Python (3.7.2)
 
 
 # 启动项目 #
-python homework.py
+python page1_homework.py
 
 
 # 运行效果 #
