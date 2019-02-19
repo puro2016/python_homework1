@@ -24,6 +24,6 @@ python page1_homework.py
 
 
 # 测试登陆用户信息 #
-	'puro':'1234321',
-	'arens':'654789',
-	'far':'3333'
+puro:1234321
+arens:654789
+far:3333

@@ -5,15 +5,11 @@
 
 '''User login program'''
 
-# user info dictionary
-user_info = {
-	'puro':'1234321',
-	'arens':'654789',
-	'far':'3333'
-	}
-
-# open file of locked user
-lock_file = open('F:\python-study\page1\lock_user_file','r')
+# read user file as a dictionary
+user_file = open('F:\python-study\page1\lock_user_file','r')
+a = user_file.read()
+user_info = eval(a)
+user_file.close()
 
 # user try login times
 times = 3
@@ -29,27 +25,28 @@ while times > 0:
 	''' % username
 
 	lg_fail_info = '''
-	----your username or password not right,please try again---------
-	----you also can try %s times,if all wrong,you accout will lock--
+	-------your username or password not right,please try again-------
+	-last %s times,if all wrong,the program exit and accout will lock-
 	''' % times
 
 	lock_info = '''
 	----Sorry,your accout has locked,please contact the author-------
 	'''
 
-	if username in lock_file.readlines():
+	if username not in user_info.keys():
+		print(lg_fail_info)
+		continue
+	if user_info[username][1] == 'locked':
 		print(lock_info)
 		break
-	elif (username in user_info
-			and password == user_info[username]):
+	elif user_info[username][0] == password:
 		print(lg_sucs_info)
 		break
 	else:
 		print(lg_fail_info)
 else:
-	print(lock_info)
-	lock_file.close()
-	lock_file = open('F:\python-study\page1\lock_user_file','a')
-	lock_file.write(username+'\n')
-
-lock_file.close()
+	if username in user_info.keys():
+		user_info[username][1] = 'locked'
+		user_file = open('F:\python-study\page1\lock_user_file','w')
+		user_file.write(str(user_info))
+		user_file.close()
